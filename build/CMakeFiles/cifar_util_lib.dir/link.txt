@@ -1,2 +1,0 @@
-/usr/bin/ar cr libcifar_util_lib.a  CMakeFiles/cifar_util_lib.dir/src/cifar_util.cpp.o
-/usr/bin/ranlib libcifar_util_lib.a

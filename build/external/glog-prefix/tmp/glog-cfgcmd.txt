@@ -1,1 +1,0 @@
-cmd='env;CFLAGS=-fPIC;CXXFLAGS=-fPIC;/home/zhaoyin/workspace/cifar/cifar_test/build/external/glog-prefix/src/glog/configure;--prefix=/home/zhaoyin/workspace/cifar/cifar_test/build/external/glog-install;--enable-shared=no;--enable-static=yes;--with-gflags=/home/zhaoyin/workspace/cifar/cifar_test/build/external/gflags-install/lib/..'

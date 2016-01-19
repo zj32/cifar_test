@@ -1,2 +1,0 @@
-/home/zhaoyin/workspace/cifar/cifar_test/build/CMakeFiles/cifar_test_main.dir
-/home/zhaoyin/workspace/cifar/cifar_test/build/CMakeFiles/cifar_util_lib.dir
