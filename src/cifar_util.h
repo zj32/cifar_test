@@ -22,9 +22,9 @@ class CIFARImage {
 	const int label_;
 };
 
-bool ConvertCifarDataSetToImages(const string& input_file,
-                                 const string& output_folder,
-								 int num_image_to_read);
+vector<CIFARImage> ConvertCifarDataSetToImages(
+        const string& input_file,
+        int num_image_to_read);
 
 
 

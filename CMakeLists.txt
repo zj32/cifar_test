@@ -30,8 +30,18 @@ find_package(Threads)
 list(APPEND cifar_LINKER_LIBS ${CMAKE_THREAD_LIBS_INIT})
 
 # OpenCV
-find_package( OpenCV REQUIRED )
+find_package(OpenCV REQUIRED)
 list(APPEND cifar_LINKER_LIBS ${OpenCV_LIBS})
+
+# Caffe
+# include("cmake/External/CAFFEConfig.cmake")
+find_package(Caffe)
+include_directories(${Caffe_INCLUDE_DIRS})
+add_definitions(${Caffe_DEFINITIONS})    # ex. -DCPU_ONLY
+
+#find_package(CAFFE REQUIRED)
+#include_directories(${CAFFE_INCLUDE_DIRS})
+list(APPEND cifar_LINKER_LIBS ${Caffe_LIBRARIES})
 
 message(STATUS  "Libs include: ${cifar_LINKER_LIBS}")
 message(STATUS "Currnet source dir =  ${CMAKE_CURRENT_SOURCE_DIR}")

@@ -11,6 +11,8 @@ cifar_util.h
 /home/zhaoyin/workspace/cifar/cifar_test/src/cifar_util.h
 fstream
 -
+vector
+-
 opencv/cv.h
 /home/zhaoyin/workspace/cifar/cifar_test/src/opencv/cv.h
 opencv/highgui.h

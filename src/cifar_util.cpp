@@ -1,6 +1,7 @@
 #include "cifar_util.h"
 
 #include <fstream>
+#include <vector>
 
 #include "opencv/cv.h"
 #include "opencv/highgui.h"
@@ -35,24 +36,21 @@ CIFARImage::CIFARImage(char* buffer, int label)
     }
 }
 
-bool ConvertCifarDataSetToImages(const string& input_filename,
-                                 const string& output_folder,
-								 int num_image_to_read) {
-    LOG(INFO) << "Input file = " << input_filename;
-    std::ifstream data_file(
-    		input_filename.c_str(), std::ios::in | std::ios::binary);
-
-    CHECK(data_file) << "Unable to open train file #" << input_filename;
-
-    for (int i = 0; i < num_image_to_read; i++) {
-    	const CIFARImage image = ReadSingleImage(&data_file);
-    	imshow("image", image.image());
-    	LOG(INFO) << "Image index " << i << ", label = " << image.label();
-    	waitKey(0);
-    }
-    LOG(INFO) << "Output folder = " << output_folder;
-    return true;
+vector<CIFARImage> ConvertCifarDataSetToImages(const string& input_filename,
+                                               int num_image_to_read) {
+  LOG(INFO) << "Input file = " << input_filename;
+  std::ifstream data_file(
+      input_filename.c_str(), std::ios::in | std::ios::binary);
+  CHECK(data_file) << "Unable to open train file #" << input_filename;
+  vector<CIFARImage> images;
+  for (int i = 0; i < num_image_to_read; i++) {
+    images.emplace_back(ReadSingleImage(&data_file));
+    imshow("image", images.back().image());
+    LOG(INFO) << "Image index " << i << ", label = " <<
+            images.back().label();
+    waitKey(0);
+  }
+  return images;
 }
-
 }  // namespace cifar
 

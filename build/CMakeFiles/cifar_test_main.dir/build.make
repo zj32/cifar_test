@@ -106,6 +106,7 @@ cifar_test_main: /usr/local/lib/libopencv_features2d.so.2.4.9
 cifar_test_main: /usr/local/lib/libopencv_core.so.2.4.9
 cifar_test_main: /usr/local/lib/libopencv_contrib.so.2.4.9
 cifar_test_main: /usr/local/lib/libopencv_calib3d.so.2.4.9
+cifar_test_main: /home/zhaoyin/Documents/caffe-master/cmake_build/lib/libcaffe.so
 cifar_test_main: /usr/local/lib/libopencv_nonfree.so.2.4.9
 cifar_test_main: /usr/local/lib/libopencv_ocl.so.2.4.9
 cifar_test_main: /usr/local/lib/libopencv_gpu.so.2.4.9
@@ -116,10 +117,29 @@ cifar_test_main: /usr/local/lib/libopencv_video.so.2.4.9
 cifar_test_main: /usr/local/lib/libopencv_ml.so.2.4.9
 cifar_test_main: /usr/local/lib/libopencv_calib3d.so.2.4.9
 cifar_test_main: /usr/local/lib/libopencv_features2d.so.2.4.9
+cifar_test_main: /usr/local/lib/libopencv_flann.so.2.4.9
 cifar_test_main: /usr/local/lib/libopencv_highgui.so.2.4.9
 cifar_test_main: /usr/local/lib/libopencv_imgproc.so.2.4.9
-cifar_test_main: /usr/local/lib/libopencv_flann.so.2.4.9
 cifar_test_main: /usr/local/lib/libopencv_core.so.2.4.9
+cifar_test_main: /home/zhaoyin/Documents/caffe-master/cmake_build/lib/libproto.a
+cifar_test_main: /usr/lib/x86_64-linux-gnu/libboost_system.so
+cifar_test_main: /usr/lib/x86_64-linux-gnu/libboost_thread.so
+cifar_test_main: /usr/lib/x86_64-linux-gnu/libboost_filesystem.so
+cifar_test_main: /usr/lib/x86_64-linux-gnu/libpthread.so
+cifar_test_main: /usr/local/lib/libglog.so
+cifar_test_main: /usr/local/lib/libgflags.a
+cifar_test_main: /usr/local/lib/libprotobuf.so
+cifar_test_main: /usr/lib/x86_64-linux-gnu/libhdf5_hl.so
+cifar_test_main: /usr/lib/x86_64-linux-gnu/libhdf5.so
+cifar_test_main: /usr/lib/x86_64-linux-gnu/liblmdb.so
+cifar_test_main: /usr/lib/x86_64-linux-gnu/libleveldb.so
+cifar_test_main: /usr/lib/libsnappy.so
+cifar_test_main: /usr/local/cuda/lib64/libcudart.so
+cifar_test_main: /usr/local/cuda/lib64/libcurand.so
+cifar_test_main: /usr/local/cuda/lib64/libcublas.so
+cifar_test_main: /opt/OpenBLAS/lib/libopenblas.so
+cifar_test_main: /usr/lib/x86_64-linux-gnu/libpython2.7.so
+cifar_test_main: /usr/lib/x86_64-linux-gnu/libboost_python.so
 cifar_test_main: CMakeFiles/cifar_test_main.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --red --bold "Linking CXX executable cifar_test_main"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/cifar_test_main.dir/link.txt --verbose=$(VERBOSE)

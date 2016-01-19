@@ -7,6 +7,8 @@ SET(CMAKE_DEPENDS_GENERATOR "Unix Makefiles")
 # The top level Makefile was generated from the following files:
 SET(CMAKE_MAKEFILE_DEPENDS
   "CMakeCache.txt"
+  "/home/zhaoyin/Documents/caffe-master/cmake_build/CaffeConfig.cmake"
+  "/home/zhaoyin/Documents/caffe-master/cmake_build/CaffeTargets.cmake"
   "../CMakeLists.txt"
   "CMakeFiles/2.8.12.2/CMakeCCompiler.cmake"
   "CMakeFiles/2.8.12.2/CMakeCXXCompiler.cmake"
