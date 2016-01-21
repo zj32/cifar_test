@@ -45,10 +45,8 @@ vector<CIFARImage> ConvertCifarDataSetToImages(const string& input_filename,
   vector<CIFARImage> images;
   for (int i = 0; i < num_image_to_read; i++) {
     images.emplace_back(ReadSingleImage(&data_file));
-    imshow("image", images.back().image());
     LOG(INFO) << "Image index " << i << ", label = " <<
             images.back().label();
-    waitKey(0);
   }
   return images;
 }

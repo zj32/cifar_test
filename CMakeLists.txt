@@ -15,15 +15,16 @@ set(cifar_LINKER_LIBS "cifar_util_lib")
 
 list(APPEND CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake/Modules)
 
+# Do not need to include glog and gflags because it is linked in Caffe.
 # ---[ Google-glog
-include("cmake/External/glog.cmake")
-include_directories(SYSTEM ${GLOG_INCLUDE_DIRS})
-list(APPEND cifar_LINKER_LIBS ${GLOG_LIBRARIES})
+# include("cmake/External/glog.cmake")
+# include_directories(SYSTEM ${GLOG_INCLUDE_DIRS})
+# list(APPEND cifar_LINKER_LIBS ${GLOG_LIBRARIES})
 
 # ---[ Google-gflags
-include("cmake/External/gflags.cmake")
-include_directories(SYSTEM ${GFLAGS_INCLUDE_DIRS})
-list(APPEND cifar_LINKER_LIBS ${GFLAGS_LIBRARIES})
+# include("cmake/External/gflags.cmake")
+# include_directories(SYSTEM ${GFLAGS_INCLUDE_DIRS})
+# list(APPEND cifar_LINKER_LIBS ${GFLAGS_LIBRARIES})
 
 # Threads
 find_package(Threads)
