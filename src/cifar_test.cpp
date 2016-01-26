@@ -10,13 +10,15 @@ DEFINE_string(input_filename,
         "Input filename.");
 DEFINE_int32(num_images, 100, "Number of images to process");
 
-using namespace std;
-using namespace cv;
+DEFINE_bool(use_gpu, true, "If true, use GPU.");
+
 using namespace caffe;
+using namespace cv;
+using namespace std;
 
 namespace {
 
-int ClassifySingleImage(const cifar_util::CIFARImage& cifar_image,
+bool ClassifySingleImage(const cifar_util::CIFARImage& cifar_image,
                          Net<float>* caffe_net) {
   const Mat& image = cifar_image.image();
   std::vector<cv::Mat> images(1, image);
@@ -25,31 +27,30 @@ int ClassifySingleImage(const cifar_util::CIFARImage& cifar_image,
   boost::shared_ptr<MemoryDataLayer<float>> md_layer =
       boost::dynamic_pointer_cast <MemoryDataLayer<float>>(
           caffe_net->layers()[0]);
-  if (!md_layer) {
-    LOG(ERROR) << "The first layer is not a MemoryDataLayer!\n";
-    return -1;
-  }
+  CHECK(md_layer != nullptr) << "The first layer is not a MemoryDataLayer!\n";
 
   md_layer->AddMatVector(images, labels);
   float loss;
 
   caffe_net->ForwardPrefilled(&loss);
   std::cout << "loss: " << loss << "\n";
-  // read the 'ip2' layer and get the result
+  // Read the 'ip2' layer and get the result.
   boost::shared_ptr<Blob<float>> prob = caffe_net->blob_by_name("ip2");
-  float maxval= 0;
-  int   maxinx= 0;
+  float max_value = 0.0;
+  int max_index = 0;
   for (int i = 0; i < prob->count(); i++) {
     float val= prob->cpu_data()[i];
-    if (val> maxval) {
-        maxval= val;
-        maxinx= i;
+    if (val > max_value) {
+      max_value= val;
+      max_index= i;
     }
-    std::cout << "[" << i << "]" << val<< "\n";
+    std::cout << "[" << i << "]" << val<< ", ";
   }
-  std::cout << "Max value = " << maxval<< ", Max index = " << maxinx<<
-      ", Ground truth = " << cifar_image.label() << "\n";
-  return 0;
+  const bool is_correct = (cifar_image.label() == max_index);
+  std::cout << "Max value = " << max_value << ", Max index = " << max_index
+      << ", Ground truth = " << cifar_image.label()
+      << (is_correct ? ", Correct." : ", Wrong.") << "\n";
+  return is_correct;
 }
 }  // namespace
 
@@ -63,27 +64,35 @@ int main(int argc, char* argv[]) {
           FLAGS_input_filename, FLAGS_num_images);
   LOG(INFO) << "Finished reading " << cifar_images.size();
 
-  // TODO: load a pretrained net and test on the testing images.
-
-  // fragment of C++ code:
+  // Absolute path of the model files.
   constexpr char kNetModelName[] =
-      "/home/zhaoyin/workspace/cifar/cifar_test/"
-      "cifar10_quick.prototxt";
+      "../cifar10_quick.prototxt";
   constexpr char kTrainedFilaName[] =
-      "/home/zhaoyin/workspace/cifar/cifar_test/"
-      "cifar10_quick_iter_5000.caffemodel.h5";
+      "../cifar10_quick_iter_5000.caffemodel.h5";
+
+  if (FLAGS_use_gpu) {
+    constexpr int kGPUDeviceId = 0;
+    Caffe::SetDevice(kGPUDeviceId);
+    Caffe::set_mode(Caffe::GPU);
+  } else {
+    Caffe::set_mode(Caffe::CPU);
+  }
 
   Net<float> caffe_net(kNetModelName, caffe::TEST);
+
   caffe_net.CopyTrainedLayersFrom(kTrainedFilaName);
   LOG(INFO) << "Model is successfully loaded";
   Timer timer;
   timer.Start();
+  int num_correct = 0;
   for (const auto& cifar_image : cifar_images) {
-    CHECK_GE(ClassifySingleImage(cifar_image, &caffe_net), 0);
+    num_correct +=
+        static_cast<int>(ClassifySingleImage(cifar_image, &caffe_net));
   }
   timer.Stop();
-  printf("Classifier %zu images used %.2f ms.\n", cifar_images.size(),
-         timer.MilliSeconds());
-
+  const double acc = static_cast<double>(num_correct) /
+      static_cast<double>(cifar_images.size());
+  printf("Classifier %zu images used %.2f ms. Acc = %.2f\n",
+         cifar_images.size(), timer.MilliSeconds(), acc);
 	return 0;
 }
